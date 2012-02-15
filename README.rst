@@ -319,6 +319,25 @@ Configuration
 
       SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 
+- It's possible to override the used ``UserSocialAuth`` model if needed::
+
+    SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL = 'myapp.UserSocialAuth'
+
+  You may want to do this if you're using a nonstandard database like
+  mongodb or couchdb.
+
+  Also, it's highly recommended that this class define the following fields::
+
+    user   = ForeignKey(User, related_name='social_auth')
+    provider = CharField(max_length=32)
+    uid  = CharFieldField(max_length=255)
+    extra_data = JSONField(blank=True)
+
+  and the method::
+
+    expiration_delta():
+        ...
+
 - You can send extra parameters on auth process by defining settings per
   provider, example to request Facebook to show Mobile authorization page,
   define::
