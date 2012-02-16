@@ -1,10 +1,16 @@
-from social_auth.backends import get_backends
-from social_auth.utils import group_backend_by_type
-from social_auth.models import User
+from django.db import models
 
+from social_auth.backends import get_backends
+from social_auth.utils import group_backend_by_type, setting
+
+if setting('SOCIAL_AUTH_USER_MODEL'):
+    User = models.get_model(*setting('SOCIAL_AUTH_USER_MODEL').rsplit('.', 1))
+else:
+    from django.contrib.auth.models import User
 
 # Note: social_auth_backends and social_auth_by_type_backends don't play nice
 #       together
+
 
 def social_auth_backends(request):
     """Load Social Auth current user data to context.

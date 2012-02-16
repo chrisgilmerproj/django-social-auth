@@ -24,6 +24,8 @@ else:
 
 class UserSocialAuth(models.Model):
     """Social Auth association model"""
+    if not isinstance(User, models.Model):
+        from django.contrib.auth.models import User
     user = models.ForeignKey(User, related_name='social_auth')
     provider = models.CharField(max_length=32)
     uid = models.CharField(max_length=255)

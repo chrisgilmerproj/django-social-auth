@@ -2,11 +2,23 @@
 import time
 import base64
 
+from django.db import models
+
 from openid.association import Association as OIDAssociation
 from openid.store.interface import OpenIDStore
 from openid.store.nonce import SKEW
 
-from social_auth.models import Association, Nonce
+from social_auth.utils import setting
+
+if setting('SOCIAL_AUTH_NONCE_MODEL'):
+    Nonce = models.get_model(*setting('SOCIAL_AUTH_NONCE_MODEL').rsplit('.', 1))
+else:
+    from social_auth.models import Nonce
+
+if setting('SOCIAL_AUTH_ASSOCIATION_MODEL'):
+    Association = models.get_model(*setting('SOCIAL_AUTH_ASSOCIATION_MODEL').rsplit('.', 1))
+else:
+    from social_auth.models import Association
 
 
 class DjangoOpenIDStore(OpenIDStore):
