@@ -4,6 +4,17 @@ from django.db.utils import IntegrityError
 from social_auth.utils import setting
 from social_auth.backends.pipeline import warn_setting
 
+
+# If UserSocialAuth class is overridden, it *must* provide the following fields
+# and methods work with django-social-auth:
+#
+#   user = ForeignKey(User)
+#   provider = CharField()
+#   uid = CharField()
+#   extra_data = JSONField()
+#   def expiration_delta()
+#       ...
+
 if setting('SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL'):
     UserSocialAuth = models.get_model(*setting('SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL').rsplit('.', 1))
 else:
