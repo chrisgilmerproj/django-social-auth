@@ -16,7 +16,7 @@ from social_auth.backends.pipeline import warn_setting
 #       ...
 
 if setting('SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL'):
-    UserSocialAuth = models.get_model(*setting('SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL').rsplit('.', 1))
+    from apps.accounts.models import UserSocialAuth
 else:
     from social_auth.models import UserSocialAuth
 

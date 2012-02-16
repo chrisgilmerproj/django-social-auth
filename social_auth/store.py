@@ -11,12 +11,12 @@ from openid.store.nonce import SKEW
 from social_auth.utils import setting
 
 if setting('SOCIAL_AUTH_NONCE_MODEL'):
-    Nonce = models.get_model(*setting('SOCIAL_AUTH_NONCE_MODEL').rsplit('.', 1))
+    from apps.accounts.models import Nonce
 else:
     from social_auth.models import Nonce
 
 if setting('SOCIAL_AUTH_ASSOCIATION_MODEL'):
-    Association = models.get_model(*setting('SOCIAL_AUTH_ASSOCIATION_MODEL').rsplit('.', 1))
+    from apps.accounts.models import Association
 else:
     from social_auth.models import Association
 
