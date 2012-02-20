@@ -73,8 +73,11 @@ def create_user(backend, details, response, uid, username, user=None, *args,
         return None
 
     email = details.get('email')
+    if email == '':
+        email = None
+    password = ''
     return {
-        'user': User.objects.create_user(username=username, email=email),
+        'user': User.create_user(username, password, email=email),
         'is_new': True
     }
 

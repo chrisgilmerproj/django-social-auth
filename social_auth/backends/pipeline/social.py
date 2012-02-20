@@ -28,8 +28,7 @@ def social_auth_user(backend, uid, user=None, *args, **kwargs):
     Raise ValueError if UserSocialAuth entry belongs to another user.
     """
     try:
-        social_user = UserSocialAuth.objects.select_related('user')\
-                                            .get(provider=backend.name,
+        social_user = UserSocialAuth.objects.get(provider=backend.name,
                                                  uid=uid)
     except UserSocialAuth.DoesNotExist:
         social_user = None

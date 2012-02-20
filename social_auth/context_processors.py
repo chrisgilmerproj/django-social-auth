@@ -8,6 +8,8 @@ if setting('SOCIAL_AUTH_USER_MODEL'):
 else:
     from django.contrib.auth.models import User
 
+from accounts.models import UserSocialAuth
+
 # Note: social_auth_backends and social_auth_by_type_backends don't play nice
 #       together
 
@@ -46,7 +48,7 @@ def social_auth_by_name_backends(request):
 
     if isinstance(user, User) and user.is_authenticated():
         accounts.update((assoc.provider.replace('-', '_'), assoc)
-                            for assoc in user.social_auth.all())
+                            for assoc in UserSocialAuth.objects.filter(user=user))
 
     return {'social_auth': accounts}
 
@@ -71,7 +73,7 @@ def backends_data(user):
     # user comes from request.user usually, on /admin/ it will be an instance
     # of auth.User and this code will fail if a custom User model was defined
     if isinstance(user, User) and user.is_authenticated():
-        associated = user.social_auth.all()
+        associated = UserSocialAuth.objects.filter(user=user)
         not_associated = list(set(available) -
                               set(assoc.provider for assoc in associated))
         values['associated'] = associated

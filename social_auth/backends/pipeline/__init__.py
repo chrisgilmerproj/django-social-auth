@@ -14,7 +14,7 @@ from social_auth.backends import get_backend, PIPELINE
 
 
 USERNAME = 'username'
-USERNAME_MAX_LENGTH = User._meta.get_field(USERNAME).max_length
+USERNAME_MAX_LENGTH = 255 #User._meta.get_field(USERNAME).max_length
 
 
 def warn_setting(name, func_name):
