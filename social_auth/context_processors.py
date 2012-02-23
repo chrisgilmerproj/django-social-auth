@@ -3,7 +3,7 @@ from django.db import models
 from social_auth.backends import get_backends
 from social_auth.utils import group_backend_by_type, setting
 
-from apps.accounts.models import User
+from mongoengine.django.auth import User
 from apps.accounts.models import UserSocialAuth
 
 # Note: social_auth_backends and social_auth_by_type_backends don't play nice
