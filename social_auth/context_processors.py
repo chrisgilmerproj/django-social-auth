@@ -4,7 +4,7 @@ from social_auth.backends import get_backends
 from social_auth.utils import group_backend_by_type, setting
 
 if setting('SOCIAL_AUTH_USER_MODEL'):
-    from mongoengine.django.auth import User
+    from apps.accounts.models import User
 else:
     from django.contrib.auth.models import User
 

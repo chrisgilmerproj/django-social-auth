@@ -47,7 +47,8 @@ def associate_user(backend, user, uid, social_user=None, *args, **kwargs):
         return None
 
     try:
-        social = UserSocialAuth.objects.create(user=user, uid=uid,
+        print type(user), user
+        social = UserSocialAuth.objects.create(user=user, uid=str(uid),
                                                provider=backend.name)
     except IntegrityError:
         # Protect for possible race condition, those bastard with FTL
