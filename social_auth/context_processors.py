@@ -3,12 +3,8 @@ from django.db import models
 from social_auth.backends import get_backends
 from social_auth.utils import group_backend_by_type, setting
 
-if setting('SOCIAL_AUTH_USER_MODEL'):
-    from apps.accounts.models import User
-else:
-    from django.contrib.auth.models import User
-
-from accounts.models import UserSocialAuth
+from apps.accounts.models import User
+from apps.accounts.models import UserSocialAuth
 
 # Note: social_auth_backends and social_auth_by_type_backends don't play nice
 #       together

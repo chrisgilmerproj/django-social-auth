@@ -15,10 +15,7 @@ from social_auth.backends.pipeline import warn_setting
 #   def expiration_delta()
 #       ...
 
-if setting('SOCIAL_AUTH_USER_SOCIAL_AUTH_MODEL'):
-    from apps.accounts.models import UserSocialAuth
-else:
-    from social_auth.models import UserSocialAuth
+from apps.accounts.models import UserSocialAuth
 
 
 def social_auth_user(backend, uid, user=None, *args, **kwargs):
@@ -47,7 +44,6 @@ def associate_user(backend, user, uid, social_user=None, *args, **kwargs):
         return None
 
     try:
-        print type(user), user
         social = UserSocialAuth.objects.create(user=user, uid=str(uid),
                                                provider=backend.name)
     except IntegrityError:
@@ -56,6 +52,8 @@ def associate_user(backend, user, uid, social_user=None, *args, **kwargs):
         #   https://github.com/omab/django-social-auth/issues/131
         return social_auth_user(backend, uid, user, social_user=social_user,
                                 *args, **kwargs)
+    except Exception as e:
+        raise e
     else:
         return {'social_user': social, 'user': social.user}
 
