@@ -705,7 +705,7 @@ def get_backends(force_load=False):
             module = import_module(auth_backend.rsplit(".", 1)[0])
             backends = getattr(module, "BACKENDS", {})
             for name, backend in backends.items():
-                if backend.enabled():
+                if backend.enabled() and name in setting('SOCIAL_AUTH_ENABLED_BACKENDS'):
                     BACKENDSCACHE[name] = backend
     return BACKENDSCACHE
 
